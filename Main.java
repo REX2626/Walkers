@@ -9,10 +9,21 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
-        BaseLimb limb = new BaseLimb(100, 50, 50, null);
+        BaseLimb limb = new BaseLimb(100, 50, 50, 0, null);
         Walker walker = new Walker(limb);
 
         frame.add(new DrawingPanel(walker));
+
+        while (true) {
+            // Ensure 60 FPS
+            try {
+                Thread.sleep(1000 / 60);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            walker.update();
+            frame.paintAll(frame.getGraphics());
+        }
     }
 
     static class DrawingPanel extends JPanel {

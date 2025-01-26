@@ -7,6 +7,10 @@ public class Walker {
         this.limb = limb;
     }
 
+    public void update() {
+        limb.update();
+    }
+
     public void draw(Graphics g) {
         limb.draw(g);
     }
