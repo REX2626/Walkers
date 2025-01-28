@@ -1,6 +1,7 @@
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.Graphics;
+import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
@@ -9,8 +10,8 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
-        // Limb limb1 = new Limb(100, 110, 50, 50, null, null);
-        BaseLimb limb = new BaseLimb(100, 60, 50, 0, null);
+        Limb limb1 = new Limb(100, 110, 50, 0.2, null, null);
+        BaseLimb limb = new BaseLimb(100, 60, 50, 0.1, limb1);
         Walker walker = new Walker(limb);
 
         frame.add(new DrawingPanel(walker));
@@ -22,11 +23,11 @@ public class Main {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            // try {
-            //     System.in.read();
-            // } catch (IOException e) {
-            //     e.printStackTrace();
-            // }
+            try {
+                System.in.read();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             walker.update();
             frame.paintAll(frame.getGraphics());
         }

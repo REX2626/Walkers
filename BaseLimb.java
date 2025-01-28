@@ -18,19 +18,19 @@ public class BaseLimb {
     }
 
     private int lx() {
-        return (int) (x - length/2 * Math.sin(angle));
+        return (int) Math.round(x - length/2 * Math.sin(angle));
     }
 
     private int ly() {
-        return (int) (y - length/2 * Math.cos(angle));
+        return (int) Math.round(y - length/2 * Math.cos(angle));
     }
 
     private int rx() {
-        return (int) (x + length/2 * Math.sin(angle));
+        return (int) Math.round(x + length/2 * Math.sin(angle));
     }
 
     private int ry() {
-        return (int) (y + length/2 * Math.cos(angle));
+        return (int) Math.round(y + length/2 * Math.cos(angle));
     }
 
     public void update() {
@@ -52,11 +52,13 @@ public class BaseLimb {
                 X = (int) (x + Math.sqrt((length/2)*(length/2) - (Constants.HEIGHT-1 - y)*(Constants.HEIGHT-1 - y)));
             }
             double theta = 2 * Math.asin(Math.sqrt((X - lx())*(X - lx()) + (Constants.HEIGHT-1 - ly())*(Constants.HEIGHT-1 - ly())) / (2 * length));
-            if (lx() < x) {
+            int left = lx();
+            if (left < x) {
                 angle -= theta;
             } else {
                 angle += theta;
             }
+            x += left - lx();
             System.out.println("left");
             System.out.println("theta: " + Math.toDegrees(theta));
             System.out.println("X: " + X);
@@ -69,11 +71,13 @@ public class BaseLimb {
                 X = (int) (x - Math.sqrt((length/2)*(length/2) - (Constants.HEIGHT-1 - y)*(Constants.HEIGHT-1 - y)));
             }
             double theta = 2 * Math.asin(Math.sqrt((X - rx())*(X - rx()) + (Constants.HEIGHT-1 - ry())*(Constants.HEIGHT-1 - ry())) / (2 * length));
-            if (rx() < x) {
+            int right = rx();
+            if (right < x) {
                 angle -= theta;
             } else {
                 angle += theta;
             }
+            x += right - rx();
             System.out.println("right, " + rx());
             System.out.println("theta: " + Math.toDegrees(theta));
             System.out.println("X: " + X);
@@ -83,9 +87,9 @@ public class BaseLimb {
 
         // Update the limb
         if (nextLimb != null) {
-            nextLimb.x = (int) (x + length * Math.sin(angle));
-            nextLimb.y = (int) (y + length * Math.cos(angle));
             nextLimb.update();
+            nextLimb.x = (int) (rx() + nextLimb.length/2 * Math.sin(nextLimb.angle));
+            nextLimb.y = (int) (ry() + nextLimb.length/2 * Math.cos(nextLimb.angle));
         }
     }
 
