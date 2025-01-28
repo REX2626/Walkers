@@ -17,20 +17,36 @@ public class BaseLimb {
         this.nextLimb = nextLimb;
     }
 
-    private int lx() {
+    protected int lx() {
         return (int) Math.round(x - length/2 * Math.sin(angle));
     }
 
-    private int ly() {
+    protected int ly() {
         return (int) Math.round(y - length/2 * Math.cos(angle));
     }
 
-    private int rx() {
+    protected int rx() {
         return (int) Math.round(x + length/2 * Math.sin(angle));
     }
 
-    private int ry() {
+    protected int ry() {
         return (int) Math.round(y + length/2 * Math.cos(angle));
+    }
+
+    protected void setLx(int lx) {
+        x = (int) Math.round(lx + length/2 * Math.sin(angle));
+    }
+
+    protected void setLy(int ly) {
+        y = (int) Math.round(ly + length/2 * Math.cos(angle));
+    }
+
+    protected void setRx(int rx) {
+        x = (int) Math.round(rx - length/2 * Math.sin(angle));
+    }
+
+    protected void setRy(int ry) {
+        y = (int) Math.round(ry - length/2 * Math.cos(angle));
     }
 
     public void update() {
@@ -88,8 +104,12 @@ public class BaseLimb {
         // Update the limb
         if (nextLimb != null) {
             nextLimb.update();
-            nextLimb.x = (int) (rx() + nextLimb.length/2 * Math.sin(nextLimb.angle));
-            nextLimb.y = (int) (ry() + nextLimb.length/2 * Math.cos(nextLimb.angle));
+            int mx = (rx() + nextLimb.lx()) / 2;
+            int my = (ry() + nextLimb.ly()) / 2;
+            setRx(mx);
+            setRy(my);
+            nextLimb.setLx(mx);
+            nextLimb.setLy(my);
         }
     }
 

@@ -10,8 +10,9 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
-        Limb limb1 = new Limb(100, 110, 50, 0.2, null, null);
-        BaseLimb limb = new BaseLimb(100, 60, 50, 0.1, limb1);
+        Limb limb2 = new Limb(200, 100, 50, 0.5, null, null);
+        Limb limb1 = new Limb(150, 110, 50, Math.PI/2, limb2, null);
+        BaseLimb limb = new BaseLimb(100, 100, 50, Math.PI-0.5, limb1);
         Walker walker = new Walker(limb);
 
         frame.add(new DrawingPanel(walker));
@@ -23,11 +24,11 @@ public class Main {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            try {
-                System.in.read();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            // try {
+            //     System.in.read();
+            // } catch (IOException e) {
+            //     e.printStackTrace();
+            // }
             walker.update();
             frame.paintAll(frame.getGraphics());
         }
