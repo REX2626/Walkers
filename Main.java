@@ -5,11 +5,12 @@ import java.awt.Graphics;
 public class Main {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Walkers");
-        frame.setSize(1000, 600);
+        frame.setSize(Constants.WIDTH, Constants.HEIGHT + 100);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
-        BaseLimb limb = new BaseLimb(100, 50, 50, 0, null);
+        // Limb limb1 = new Limb(100, 110, 50, 50, null, null);
+        BaseLimb limb = new BaseLimb(100, 60, 50, 0, null);
         Walker walker = new Walker(limb);
 
         frame.add(new DrawingPanel(walker));
@@ -21,6 +22,11 @@ public class Main {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            // try {
+            //     System.in.read();
+            // } catch (IOException e) {
+            //     e.printStackTrace();
+            // }
             walker.update();
             frame.paintAll(frame.getGraphics());
         }
@@ -37,6 +43,7 @@ public class Main {
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             walker.draw(g);
+            g.drawLine(0, Constants.HEIGHT, Constants.WIDTH, Constants.HEIGHT);
         }
     }
 }
